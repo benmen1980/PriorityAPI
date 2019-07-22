@@ -329,7 +329,7 @@ class API
             'body_raw' => $response_body,
             'code'     => $response_code,
             'status'   => ($response_code >= 200 && $response_code < 300) ? 1 : 0,
-            'message'  => $response_message
+            'message'  => ($response_message ? $response_message : $response->get_error_message())
         ];
 
         
