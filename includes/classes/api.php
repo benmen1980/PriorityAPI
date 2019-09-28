@@ -315,7 +315,7 @@ class API
                 'url'            => $url,
                 'request_method' => strtoupper($method),
                 'json_request'   => (isset($args['body'])) ? $this->decodeHebrew($args['body']) : '',
-                 'json_response'  => ($response_body_decoded ? $response_body_decoded : $response->get_error_message()),
+                 'json_response'  => ($response_body_decoded ? $response_body_decoded : $response_message.' '.$response_code),
                 'json_status'    => ($response_code >= 200 && $response_code < 300) ? 1 : 0
             ]);
         }
