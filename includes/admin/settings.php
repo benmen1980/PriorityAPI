@@ -67,7 +67,24 @@
                     <input id="p18a-password" type="text" name="p18a-password" form="p18a-settings" value="<?php echo $this->option('password'); ?>">
                 </td>
             </tr>
+            <tr>
+                <td class="p18a-label">
+                    <label for="p18a-X-App-Id"><?php _e('X-App-Id', 'p18a'); ?></label>
+                </td>
+                <td>
+                    <input id="p18a-X-App-Id" type="text" name="p18a-X-App-Id" form="p18a-settings"  value="<?php echo $this->option('X-App-Id'); ?>">
+                </td>
+            </tr>
 
+
+            <tr>
+                <td class="p18a-label">
+                    <label for="p18a-X-App-Key"><?php _e('X-App-Key', 'p18a'); ?></label>
+                </td>
+                <td>
+                    <input id="p18a-X-App-Key" type="text" name="p18a-X-App-Key" form="p18a-settings" value="<?php echo $this->option('X-App-Key'); ?>">
+                </td>
+            </tr>
             <tr>
                 <td class="p18a-label">
                     <label for="p18a-sslverify"><?php _e('SSL verify', 'p18a'); ?></label>
