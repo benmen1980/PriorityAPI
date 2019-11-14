@@ -179,7 +179,11 @@ class API
                 $this->updateOption('username',     $this->post('p18a-username'));
                 $this->updateOption('password',     $this->post('p18a-password'));
                 $this->updateOption('sslverify',    $this->post('p18a-sslverify'));
-
+                
+                // API
+	            $this->updateOption('X-App-Id',    $this->post('p18a-X-App-Id'));
+	            $this->updateOption('X-App-Key',    $this->post('p18a-X-App-Key'));
+                
                 $this->notify('Settings saved');
 
             }
