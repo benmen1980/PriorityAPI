@@ -279,7 +279,9 @@ class API
         $args = [
             'headers' => [
                 'Authorization' => 'Basic ' . base64_encode($this->option('username') . ':' . $this->option('password')),
-                'Content-Type'  => 'application/json'
+                'Content-Type'  => 'application/json',
+                'X-App-Id' => $this->option('X-App-Id'),
+	            'X-App-Key' => $this->option('X-App-Key')
             ],
             'timeout'   => 45,
             'method'    => strtoupper($method),
