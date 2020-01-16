@@ -318,7 +318,7 @@ class API
             $GLOBALS['wpdb']->insert($GLOBALS['wpdb']->prefix . 'p18a_logs', [
                 'blog_id'        => get_current_blog_id(),
                 'timestamp'      => current_time('mysql'),
-                'url'            => $url,
+                'url'            => $url_addition,
                 'request_method' => strtoupper($method),
                 'json_request'   => (isset($args['body'])) ? $this->decodeHebrew($args['body']) : '',
                  'json_response'  => ($response_body_decoded ? $response_body_decoded : $response_message.' '.$response_code),
