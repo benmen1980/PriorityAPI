@@ -36,5 +36,6 @@ define('P18A_PLUGIN_NAME'      , 'Priority 18 API');
 define('P18A_PLUGIN_ADMIN_URL' , sanitize_title(P18A_PLUGIN_NAME));
 
 require P18A_CLASSES_DIR . 'api.php';
+require_once( P18A_DIR . 'includes/front/shortcodes/sample_shortcode.php' );
 
 API::instance()->run();
