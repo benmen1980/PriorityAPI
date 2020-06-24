@@ -358,7 +358,7 @@ class API
             'content-type: text/html'
         ];
 
-        wp_mail( $to, $subject, $error, $headers );
+        wp_mail( $to,get_bloginfo('name').' '. $subject, $error, $headers );
     }
 
     // decode unicode hebrew text
