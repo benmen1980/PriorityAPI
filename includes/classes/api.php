@@ -346,7 +346,12 @@ class API
      */
     public function sendEmailError($emails, $subject = '', $error = '')
     {
-        if (!$emails) return;
+        
+	$bloguser = get_users('role=Administrator')[0];
+	array_push($emails,$bloguser->user_email);
+
+	    
+	if (!$emails) return;
 
         if ($emails && !is_array($emails)) {
             $pattern ="/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i";
