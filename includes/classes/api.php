@@ -395,7 +395,7 @@ class API
     * @param string $option
     * @param mixed $default
     */
-    protected function option($option, $default = false) 
+    public function option($option, $default = false) 
     {
         return get_option(static::$prefix . $option, $default);
     }
