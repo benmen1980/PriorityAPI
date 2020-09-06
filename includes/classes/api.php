@@ -172,8 +172,8 @@ class API
             // save settings
             if ($this->post('p18a-save-settings') && wp_verify_nonce($this->post('p18a-nonce'), 'save-settings')) {
 
-                $this->updateOption('version',  $this->post('p18a-version'));
-                $this->updateOption('priority-version',  $this->post('priority-version'));
+                $this->updateOption('priority-version',  $this->post('p18a-version'));
+                $this->updateOption('application',  $this->post('p18a-application'));
                 $this->updateOption('environment',  $this->post('p18a-environment'));
                 $this->updateOption('language',     $this->post('p18a-language'));
                 $this->updateOption('url',          $this->post('p18a-url'));
