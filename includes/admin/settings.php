@@ -15,6 +15,14 @@
 
             <tr>
                 <td class="p18a-label">
+                    <label for="priority-version"><?php _e('Priority Version', 'p18a'); ?></label>
+                </td>
+                <td>
+                    <input id="priority-version" type="text" name="priority-version" form="p18a-settings" value="<?php echo $this->option('priority-version'); ?>">
+                </td>
+            </tr>
+            <tr>
+                <td class="p18a-label">
                     <label for="p18a-application"><?php _e('Application', 'p18a'); ?></label>
                 </td>
                 <td>
