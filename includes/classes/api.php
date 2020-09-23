@@ -350,7 +350,7 @@ class API
         
 	$bloguser = get_users('role=Administrator')[0];
 	array_push($emails,$bloguser->user_email);
-
+        array_push($emails,get_bloginfo('admin_email'));
 	    
 	if (!$emails) return;
 
