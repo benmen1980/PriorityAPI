@@ -345,15 +345,12 @@ class API
     /**
      * t149 Send Email Error
      */
-    public function sendEmailError($emails, $subject = '', $error = '')
+    public function sendEmailError($email_list, $subject = '', $error = '')
     {
-        
-	$bloguser = get_users('role=Administrator')[0];
-	array_push($emails,$bloguser->user_email);
-        array_push($emails,get_bloginfo('admin_email'));
-	    
+	$emails = [];
+        $emails = explode(',',$email_list);
+    	array_push($emails,get_bloginfo('admin_email'));
 	if (!$emails) return;
-
         if ($emails && !is_array($emails)) {
             $pattern ="/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i";
             preg_match_all($pattern, $emails, $result);
@@ -363,19 +360,15 @@ class API
         $headers = [
             'content-type: text/html'
         ];
-
         wp_mail( $to,get_bloginfo('name').' '. $subject, $error, $headers );
     }
-
     // decode unicode hebrew text
     public function decodeHebrew($string)
     {
         return preg_replace_callback('/\\\\u([0-9a-fA-F]{4})/', function ($match) {
             return mb_convert_encoding(pack('H*', $match[1]), 'UTF-8', 'UTF-16BE');
         }, $string);
-    }
-    
-        
+    }   
     /**
     * Add option
     * 
