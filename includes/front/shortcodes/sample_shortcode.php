@@ -138,7 +138,7 @@ class My_Example_List_Table extends WP_List_Table {
 
 
 function my_add_menu_items(){
-	$hook = add_menu_page( 'My Plugin List Table', 'My List Table Example', 'activate_plugins', 'my_list_test', 'my_render_list_page' );
+	$hook = add_menu_page( 'My Plugin List Table', 'My List Table Example', 'activate_plugins', 'my_list_test', 'simply_my_render_list_page' );
 	add_action( "load-$hook", 'add_options' );
 }
 
@@ -157,7 +157,7 @@ add_action( 'admin_menu', 'my_add_menu_items' );
 
 
 
-function my_render_list_page(){
+function simply_my_render_list_page(){
 
 	if(!isset($_REQUEST['paged'])) {
 		$_REQUEST['paged'] = explode('/page/', $_SERVER['REQUEST_URI'], 2);
@@ -217,7 +217,7 @@ add_action ('init', function(){
 
 
 
-add_shortcode('grid','my_render_list_page');
+add_shortcode('grid','simply_my_render_list_page');
 
 
 function get_data_from_priority(){
