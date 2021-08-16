@@ -394,7 +394,7 @@ class API
      */
     public function sendEmailError($email_list, $subject = '', $error = '')
     {
-	$emails = [];
+	//$emails = [];
         $emails = explode(',',$email_list);
     	array_push($emails,get_bloginfo('admin_email'));
 	if (!$emails) return;
