@@ -534,10 +534,7 @@ class API
      * @param mixed $old_key
      * @param mixed $new_key
      */
-    /**
-     *Function for replacing a field in an array.
-     */
-    public static function change_key( $array, $old_key, $new_key ) {
+     public static function change_key( $array, $old_key, $new_key ) {
         if(!array_key_exists( $old_key, $array ))
             return $array;
         $keys = array_keys( $array );
