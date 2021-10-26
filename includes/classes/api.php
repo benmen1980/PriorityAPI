@@ -527,6 +527,21 @@ class API
     {
         return static::$prefix;
     }
-   
-
+    /**
+     * change_key variable
+     *
+     * @param mixed $array
+     * @param mixed $old_key
+     * @param mixed $new_key
+     */
+    /**
+     *Function for replacing a field in an array.
+     */
+    public static function change_key( $array, $old_key, $new_key ) {
+        if(!array_key_exists( $old_key, $array ))
+            return $array;
+        $keys = array_keys( $array );
+        $keys[ array_search( $old_key, $keys ) ] = $new_key;
+        return array_combine( $keys, $array );
+    }
 }
