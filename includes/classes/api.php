@@ -395,8 +395,11 @@ class API
     public function sendEmailError($email_list, $subject = '', $error = '')
     {
 	//$emails = [];
-        $emails = explode(',',$email_list);
-    	array_push($emails,get_bloginfo('admin_email'));
+        if(!$email_list)
+        {
+            $emails = explode(',',$email_list);
+        }
+        array_push($emails,get_bloginfo('admin_email'));
 	if (!$emails) return;
         if ($emails && !is_array($emails)) {
             $pattern ="/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i";
