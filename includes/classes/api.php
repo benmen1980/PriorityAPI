@@ -290,7 +290,7 @@ class API
             id  INT AUTO_INCREMENT,
             blog_id INT,
             timestamp DATETIME,
-            url VARCHAR(256),
+            url VARCHAR(1000),
             request_method VARCHAR(8),
             json_request LONGTEXT,
             json_response LONGTEXT,
