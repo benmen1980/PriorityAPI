@@ -136,7 +136,7 @@
 /* Tooltip text */
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 120px;
+    width: 500px;
     background-color: orange;
     color: #fff;
     text-align: center;
