@@ -1,5 +1,18 @@
 <?php defined('ABSPATH') or die('No direct script access!'); ?>
 
+// delete old log
+$last_date = date('Y-m-d', strtotime('-6 week'));
+global $wpdb;
+//$query = 'DELETE  FROM  '.$GLOBALS['wpdb']->prefix . 'p18a_logs' .' WHERE timestamp   < '.$last_date;
+//$res = $wpdb->query($wpdb->query('DELETE  FROM  '.$GLOBALS['wpdb']->prefix . 'p18a_logs' .' WHERE timestamp   < %d',$last_date));
+$res = $wpdb->query(
+    "DELETE FROM " . $wpdb->prefix . "p18a_logs
+   WHERE timestamp < DATE_SUB(CURDATE(),INTERVAL 30 DAY)"
+);
+if($res>0){
+    echo  $res.' records have been deleted from log';
+}
+
 <h1>
     <?php echo P18A_PLUGIN_NAME; ?> 
     <span id="p18a_version"><?php echo P18A_VERSION; ?></span>
