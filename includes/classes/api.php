@@ -396,10 +396,8 @@ class API
      */
     public function sendEmailError($email_list, $subject = '', $error = '')
     {
-        //$emails = [];
-        if (!$email_list) {
-            $emails = explode(',', $email_list);
-        }
+
+        $emails = []; // email list deprishiated by Roy 25.04.22
         array_push($emails, get_bloginfo('admin_email'));
         if (!$emails) return;
         if ($emails && !is_array($emails)) {
