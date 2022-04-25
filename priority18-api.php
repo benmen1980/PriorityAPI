@@ -8,7 +8,7 @@
 * Plugin Name: Priority 18 API 
 * Plugin URI: http://www.roi-holdings.com
 * Description: Priority is an ERP system, it delivers advanced solutions based on innovative technologies, from cloud and on-premise, to APIs and mobile
-* Version: 1.0
+* Version: 1.1
 * Author: Roi Holdings
 * Author URI: http://www.roi-holdings.com
 * Licence: GPLv2
@@ -20,9 +20,10 @@
 namespace PriorityAPI;
 
 defined('ABSPATH') or die('No direct script access!');
-
+$plugin_data = get_file_data(__FILE__, array('Version' => 'Version'), false);
+$plugin_version = $plugin_data['Version'];
 // Priority API
-define('P18A_VERSION'       , '1.0');
+define('P18A_VERSION'       , $plugin_version);
 define('P18A_SELF'          , __FILE__);
 define('P18A_URI'           , plugin_dir_url(__FILE__));
 define('P18A_DIR'           , plugin_dir_path(__FILE__)); 

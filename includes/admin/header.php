@@ -1,5 +1,6 @@
 <?php defined('ABSPATH') or die('No direct script access!'); ?>
 
+<?php
 // delete old log
 $last_date = date('Y-m-d', strtotime('-6 week'));
 global $wpdb;
@@ -12,6 +13,7 @@ $res = $wpdb->query(
 if($res>0){
     echo  $res.' records have been deleted from log';
 }
+?>
 
 <h1>
     <?php echo P18A_PLUGIN_NAME; ?> 
