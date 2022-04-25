@@ -314,7 +314,11 @@ class API
         $GLOBALS['wpdb']->query('DELETE FROM ' . $GLOBALS['wpdb']->prefix . 'options WHERE option_name LIKE "' . API::optionPrefix() . '%"');
         $GLOBALS['wpdb']->query('DROP TABLE IF EXISTS ' . $GLOBALS['wpdb']->prefix . 'p18a_logs;');
     }
-
+// delete old log
+        $last_date = date('Y-m-d', strtotime('-6 week'));
+        global $wpdb;
+        $query = 'DELETE  FROM  '.$GLOBALS['wpdb']->prefix . 'p18a_logs' .' WHERE timestamp   < '. $last_date;
+        $res = $wpdb->query($wpdb->prepare($query,));
 
     /**
      * MAke request
