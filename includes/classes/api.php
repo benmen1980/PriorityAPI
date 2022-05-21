@@ -310,14 +310,14 @@ class API
      */
     public function deactivation()
     {
-        // housekeeping
-        $GLOBALS['wpdb']->query('DELETE FROM ' . $GLOBALS['wpdb']->prefix . 'options WHERE option_name LIKE "' . API::optionPrefix() . '%"');
-        $GLOBALS['wpdb']->query('DROP TABLE IF EXISTS ' . $GLOBALS['wpdb']->prefix . 'p18a_logs;');
+      //  housekeeping
+      //  $GLOBALS['wpdb']->query('DELETE FROM ' . $GLOBALS['wpdb']->prefix . 'options WHERE option_name LIKE "' . API::optionPrefix() . '%"');
+          $GLOBALS['wpdb']->query('DROP TABLE IF EXISTS ' . $GLOBALS['wpdb']->prefix . 'p18a_logs;');
     }
 
 
     /**
-     * MAke request
+     * Make request
      *
      * @param [type] $method
      * @param [type] $url_addition

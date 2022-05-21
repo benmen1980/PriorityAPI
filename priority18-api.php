@@ -31,12 +31,9 @@ define('P18A_ASSET_DIR'     , trailingslashit(P18A_DIR)    . 'assets/');
 define('P18A_ASSET_URL'     , trailingslashit(P18A_URI)    . 'assets/');
 define('P18A_CLASSES_DIR'   , trailingslashit(P18A_DIR)    . 'includes/classes/');
 define('P18A_ADMIN_DIR'     , trailingslashit(P18A_DIR)    . 'includes/admin/');
-
 // define plugin name and plugin admin url
 define('P18A_PLUGIN_NAME'      , 'Priority 18 API');
 define('P18A_PLUGIN_ADMIN_URL' , sanitize_title(P18A_PLUGIN_NAME));
-
 require P18A_CLASSES_DIR . 'api.php';
 require_once( P18A_DIR . 'includes/front/shortcodes/sample_shortcode.php' );
-
 API::instance()->run();
