@@ -17,7 +17,7 @@ class API
         // set prefix for options, supports multisite
         static::$prefix = sprintf('p18a_%s_', get_current_blog_id());
 
-        // autoloader   
+        // autoloader
         spl_autoload_register(function ($class) {
 
             // check namespace
@@ -220,7 +220,7 @@ class API
 
             /*
             * Create a column. And maybe remove some of the default ones
-            * @param array $columns Array of all user table columns {column ID} => {column Name} 
+            * @param array $columns Array of all user table columns {column ID} => {column Name}
             */
             add_filter('manage_users_columns', function ($columns) {
 
@@ -255,7 +255,7 @@ class API
 
             /*
             * Make our "Registration date" column sortable
-            * @param array $columns Array of all user sortable columns {column ID} => {orderby GET-param} 
+            * @param array $columns Array of all user sortable columns {column ID} => {orderby GET-param}
             */
             add_filter('manage_users_sortable_columns', function ($columns) {
 
@@ -399,6 +399,7 @@ class API
 
         $emails = []; // email list deprishiated by Roy 25.04.22
         array_push($emails, get_bloginfo('admin_email'));
+        $emails=apply_filters('simplyct_sendEmail',$emails);
         if (!$emails) return;
         if ($emails && !is_array($emails)) {
             $pattern = "/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i";
