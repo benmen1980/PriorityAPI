@@ -8,7 +8,7 @@
 * Plugin Name: Priority 18 API 
 * Plugin URI: http://www.roi-holdings.com
 * Description: Priority is an ERP system, it delivers advanced solutions based on innovative technologies, from cloud and on-premise, to APIs and mobile
-* Version: 1.2.3
+* Version: 1.2.3.1
 * Author: Roi Holdings
 * Author URI: http://www.roi-holdings.com
 * Licence: GPLv2
@@ -45,7 +45,7 @@ require ( plugin_dir_path( __FILE__ ) ). 'update_this_plugin.php';
 // Initialize your extension of the update class passing in the current plugin version, directory and slug.
 //Current Version, Directory name, Plugin_Slug (main file name without extensioni.e this current file )
 //Github username, github repo name, branch (optional, default = main)
-$updater = new \NexVis\WordPress\Update_This_Plugin( '1.3.0', 'PriorityAPI', 'priority18-api', 'benmen1980', 'PriorityAPI','master' );
+$updater = new \NexVis\WordPress\Update_This_Plugin( '1.3.0', 'PriorityAPI-master', 'priority18-api', 'benmen1980', 'PriorityAPI','master' );
 
 // Initialize the class which sets up the filters for `transient_update_plugins` and `site_transient_update_plugins`
 $updater->init();
