@@ -38,6 +38,10 @@ require P18A_CLASSES_DIR . 'api.php';
 require_once( P18A_DIR . 'includes/front/shortcodes/sample_shortcode.php' );
 API::instance()->run();
 
+
+// Load the updater.
+require ( plugin_dir_path( __FILE__ ) ). 'update_this_plugin.php';
+
 // Initialize your extension of the update class passing in the current plugin version, directory and slug.
 //Current Version, Directory name, Plugin_Slug (main file name without extensioni.e this current file )
 //Github username, github repo name, branch (optional, default = main)
