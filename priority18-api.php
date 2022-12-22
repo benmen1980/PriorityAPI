@@ -37,3 +37,11 @@ define('P18A_PLUGIN_ADMIN_URL' , sanitize_title(P18A_PLUGIN_NAME));
 require P18A_CLASSES_DIR . 'api.php';
 require_once( P18A_DIR . 'includes/front/shortcodes/sample_shortcode.php' );
 API::instance()->run();
+
+// Initialize your extension of the update class passing in the current plugin version, directory and slug.
+//Current Version, Directory name, Plugin_Slug (main file name without extensioni.e this current file )
+//Github username, github repo name, branch (optional, default = main)
+$updater = new \NexVis\WordPress\Update_This_Plugin( '1.3.0', 'PriorityAPI', 'priority18-api', 'benmen1980', 'PriorityAPI','master' );
+
+// Initialize the class which sets up the filters for `transient_update_plugins` and `site_transient_update_plugins`
+$updater->init();
