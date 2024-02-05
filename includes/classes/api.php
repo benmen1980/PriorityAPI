@@ -361,11 +361,14 @@ class API
 
         // decode hebrew
         $response_body_decoded = $this->decodeHebrew($response_body);
-        $tablename = $GLOBALS['wpdb']->prefix . 'p18a_logs';
+        // $tablename = $GLOBALS['wpdb']->prefix . 'p18a_logs';
+        $prefix = is_multisite() ? $GLOBALS['wpdb']->base_prefix : $GLOBALS['wpdb']->prefix;
+        $tablename = $prefix . 'p18a_logs';
         $GLOBALS['wpdb']->get_col_length($tablename, 'url');
+
         // log request
         if ($log && strlen($url) <= $GLOBALS['wpdb']->get_col_length($tablename, 'url')['length']) {
-            $GLOBALS['wpdb']->insert($GLOBALS['wpdb']->prefix . 'p18a_logs', [
+            $GLOBALS['wpdb']->insert($tablename, [
                 'blog_id' => get_current_blog_id(),
                 'timestamp' => current_time('mysql'),
                 'url' => $url_addition,
