@@ -323,24 +323,11 @@ class API
      * @param [type] $url_addition
      * @param array $options
      */
-    public function makeRequest($method, $url_addition = null, $options = [], $log = false)
+    public function makeRequest($method, $url_addition = null, $options = [], $log = true)
     {
-        $args = [
-            'headers' => [
-                'Authorization' => 'Basic ' . base64_encode($this->option('username') . ':' . $this->option('password')),
-                'Content-Type' => 'application/json',
-                'X-App-Id' => $this->option('X-App-Id'),
-                'X-App-Key' => $this->option('X-App-Key')
-            ],
-            'timeout' => 45,
-            'method' => strtoupper($method),
-            'sslverify' => $this->option('sslverify', false)
-        ];
-
-
-        if (!empty($options)) {
-            $args = array_merge($args, $options);
-        }
+        $max_retries    = 3;
+        $retry_count    = 0;
+        $timeout_error  = 'cURL error 28: Connection timed out after';
 
         $url = sprintf('https://%s/odata/Priority/%s/%s/%s',
             $this->option('url'),
@@ -349,51 +336,85 @@ class API
             is_null($url_addition) ? '' : stripslashes($url_addition)
         );
 
-        $response = wp_remote_request($url, $args);
+        $args_base = [
+            'headers' => [
+                'Authorization' => 'Basic ' . base64_encode($this->option('username') . ':' . $this->option('password')),
+                'Content-Type'  => 'application/json',
+                'X-App-Id'      => $this->option('X-App-Id'),
+                'X-App-Key'     => $this->option('X-App-Key'),
+            ],
+            'timeout'   => 45,
+            'method'    => strtoupper($method),
+            'sslverify' => $this->option('sslverify', false)
+        ];
 
-        $response_code = wp_remote_retrieve_response_code($response);
-        $response_message = wp_remote_retrieve_response_message($response);
-        $response_body = wp_remote_retrieve_body($response);
+        $args = array_merge($args_base, $options);
 
-        if ($response_code >= 400) {
-            $response_body = strip_tags($response_body);
-        }
+        do {
+            $response = wp_remote_request($url, $args);
 
-        // decode hebrew
-        $response_body_decoded = $this->decodeHebrew($response_body);
-        // $tablename = $GLOBALS['wpdb']->prefix . 'p18a_logs';
-        $prefix = is_multisite() ? $GLOBALS['wpdb']->base_prefix : $GLOBALS['wpdb']->prefix;
-        $tablename = $prefix . 'p18a_logs';
-        $GLOBALS['wpdb']->get_col_length($tablename, 'url');
+            $response_code    = wp_remote_retrieve_response_code($response);
+            $response_message = wp_remote_retrieve_response_message($response);
+            $response_body    = wp_remote_retrieve_body($response);
 
-        // log request
-        if ($log && strlen($url) <= $GLOBALS['wpdb']->get_col_length($tablename, 'url')['length']) {
-            $GLOBALS['wpdb']->insert($tablename, [
-                'blog_id' => get_current_blog_id(),
-                'timestamp' => current_time('mysql'),
-                'url' => $url_addition,
+            if ($response_code >= 400) {
+                $response_body = strip_tags($response_body);
+            }
+
+            $response_body_decoded = $this->decodeHebrew($response_body);
+
+            $response_data = [
+                'url'      => $url,
+                'args'     => $args,
+                'method'   => strtoupper($method),
+                'body'     => $response_body_decoded,
+                'body_raw' => $response_body,
+                'code'     => $response_code,
+                'status'   => ($response_code >= 200 && $response_code < 300) ? 1 : 0,
+                'message'  => (is_wp_error($response) ? $response->get_error_message() : ($response_message ?: ''))
+            ];
+
+            // Retry logic if timeout error detected
+            if (
+                !$response_data['status'] &&
+                isset($response_data['message']) &&
+                strpos($response_data['message'], $timeout_error) !== false &&
+                $retry_count < $max_retries
+            ) {
+                $retry_count++;
+                wp_mail(
+                    'elisheva.g@simplcy.co.il',
+                    'Priority API Timeout Retry Attempt',
+                    sprintf(
+                        "Retry attempt #%d due to timeout error while making a request to the Priority API.\n\nURL: %s\nMethod: %s\n\nError Message:\n%s",
+                        $retry_count,
+                        $url,
+                        strtoupper($method),
+                        $response_data['message']
+                    )
+                );
+                sleep(1);
+            } else {
+                break;
+            }
+
+        } while ($retry_count <= $max_retries);
+
+        // Log the request if enabled
+        if ($log) {
+            $GLOBALS['wpdb']->insert($GLOBALS['wpdb']->prefix . 'p18a_logs', [
+                'blog_id'        => get_current_blog_id(),
+                'timestamp'      => current_time('mysql'),
+                'url'            => $url_addition,
                 'request_method' => strtoupper($method),
-                'json_request' => (isset($args['body'])) ? $this->decodeHebrew($args['body']) : '',
-                'json_response' => ($response_body_decoded ? $response_body_decoded : $response_message . ' ' . $response_code),
-                'json_status' => ($response_code >= 200 && $response_code < 300) ? 1 : 0
+                'json_request'   => isset($args['body']) ? $this->decodeHebrew($args['body']) : '',
+                'json_response'  => $response_data['body'] ?: ($response_data['message'] . ' ' . $response_data['code']),
+                'json_status'    => $response_data['status']
             ]);
         }
 
-
-        return [
-            'url' => $url,
-            'args' => $args,
-            'method' => strtoupper($method),
-            'body' => $response_body_decoded,
-            'body_raw' => $response_body,
-            'code' => $response_code,
-            'status' => ($response_code >= 200 && $response_code < 300) ? 1 : 0,
-            'message' => ($response_message ? $response_message : $response->get_error_message())
-        ];
-
-
+        return $response_data;
     }
-
     /**
      * t149 Send Email Error
      */
