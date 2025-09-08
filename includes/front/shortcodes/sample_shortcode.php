@@ -223,7 +223,7 @@ add_shortcode('grid','simply_my_render_list_page');
 function get_data_from_priority(){
 	PriorityAPI\API::instance()->run();
 	// make request
-	$response = PriorityAPI\API::instance()->makeRequest('GET', 'LOGPART', null,true);
+	$response = PriorityAPI\API::instance()->makeRequest('GET', 'LOGPART', [],true);
 
 	if ($response['code']<=201) {
 		$body_array = json_decode($response["body"],true);
