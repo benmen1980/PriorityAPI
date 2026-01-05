@@ -327,7 +327,7 @@ class API
     {
         $max_retries    = 3;
         $retry_count    = 0;
-        $timeout_error  = 'cURL error 28: Connection timed out after';
+        $timeout_error  = 'cURL error 28'; // ("Connection timed out" or "Operation timed out")
 
         $url = sprintf('https://%s/odata/Priority/%s/%s/%s',
             $this->option('url'),
